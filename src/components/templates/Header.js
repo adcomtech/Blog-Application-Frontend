@@ -1,9 +1,15 @@
-import React from "react";
+import React from 'react';
+import { MainNav } from '../navigation/MainNav';
 
 export const Header = () => {
   return (
-    <React.Fragment>
-      <header className="header">navigation</header>
-    </React.Fragment>
+    <header className='header'>
+      <div className='logo'>
+        <h1>AdcomtechBlog</h1>
+      </div>
+      <nav>
+        <MainNav />
+      </nav>
+    </header>
   );
 };

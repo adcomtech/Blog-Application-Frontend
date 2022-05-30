@@ -5,6 +5,7 @@ import { baseURL } from '../../utilities/baseURL';
 // ACTION TYPES
 const USER_REGISTER = 'USER_REGISTER';
 const USER_LOGIN = 'USER_LOGIN';
+const USER_LOGOUT = 'USER_LOGOUT';
 
 // configuration
 const actionConfig = () => {
@@ -66,6 +67,24 @@ export const userLoginAction = createAsyncThunk(
 const getUserData = localStorage.getItem('userLoginData');
 const loggedInUserData = getUserData ? JSON.parse(getUserData) : null;
 
+// /////////////
+// LOGOUT USER ACTION
+export const userLogoutAction = createAsyncThunk(
+  USER_LOGOUT,
+  async (payload, { rejectWithValue, getState, dispatch }) => {
+    try {
+      // Remove Login In User from local Storage
+      localStorage.removeItem('userLoginData');
+    } catch (error) {
+      if (!error.response) {
+        throw error;
+      }
+      // pass the error to the reject value
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 // creating slices which takes "name of slice, initial state as object" and reducers as function which accepts builder parameter
 
 const usersSlices = createSlice({
@@ -113,6 +132,26 @@ const usersSlices = createSlice({
     });
 
     builder.addCase(userLoginAction.rejected, (state, action) => {
+      state.loading = false;
+      // displaying error
+      state.appError = action?.payload?.message;
+      state.serverError = action?.error?.message;
+    });
+
+    // User Logout Reducer Cases
+
+    builder.addCase(userLogoutAction.pending, (state, action) => {
+      state.loading = false;
+    });
+
+    builder.addCase(userLogoutAction.fulfilled, (state, action) => {
+      state.loading = false;
+      state.loggedInUser = undefined;
+      state.appError = undefined;
+      state.serverError = undefined;
+    });
+
+    builder.addCase(userLogoutAction.rejected, (state, action) => {
       state.loading = false;
       // displaying error
       state.appError = action?.payload?.message;

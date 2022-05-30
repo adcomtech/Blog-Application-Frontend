@@ -1,18 +1,18 @@
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
-import { useFormik } from "formik"; // for handling form
-import * as Yup from "yup"; // for form validation
-import { userRegistrationAction } from "../../redux/slices/usersSlices";
+import { useFormik } from 'formik'; // for handling form
+import * as Yup from 'yup'; // for form validation
+import { userRegistrationAction } from '../../redux/slices/usersSlices';
 
 // handling validation
 const formSchema = Yup.object({
-  firstName: Yup.string().required("First Name is Required"),
-  lastName: Yup.string().required("Last Name is Required"),
-  email: Yup.string().required("Email is Required"),
-  password: Yup.string().required("Password is Required"),
-  passwordConfirm: Yup.string().required("Password do not Match"),
+  firstName: Yup.string().required('First Name is Required'),
+  lastName: Yup.string().required('Last Name is Required'),
+  email: Yup.string().required('Email is Required'),
+  password: Yup.string().required('Password is Required'),
+  passwordConfirm: Yup.string().required('Password do not Match'),
 });
 
 export const Register = () => {
@@ -22,14 +22,14 @@ export const Register = () => {
   // Handling form Initial Values using formik
   const formik = useFormik({
     initialValues: {
-      firstName: "",
-      lastName: "",
-      email: "",
-      password: "",
-      passwordConfirm: "",
+      firstName: '',
+      lastName: '',
+      email: '',
+      password: '',
+      passwordConfirm: '',
     },
 
-    onSubmit: (values) => {
+    onSubmit: values => {
       // dispatching userRegistration Action
       dispatch(userRegistrationAction(values));
       // console.log(values);
@@ -39,7 +39,7 @@ export const Register = () => {
   });
 
   // Selecting Data from Store which are messages like 'Error, loading, success message" using useSelector hook
-  const storeData = useSelector((store) => store.users);
+  const storeData = useSelector(store => store.users);
 
   // distructing storeData
   const { loading, appError, serverError, registered } = storeData;
@@ -48,12 +48,12 @@ export const Register = () => {
   // Redirecting the Registered User  to Profile Page
   const navigate = useNavigate();
   if (registered) {
-    return navigate("profile", { replace: true });
+    return navigate('profile', { replace: true });
   }
 
   return (
     <>
-      <div className="form-heading">
+      <div className='form-heading'>
         <h1>Registration page</h1>
 
         {/* Displaying Error Message */}
@@ -63,72 +63,72 @@ export const Register = () => {
           </h2>
         ) : null}
       </div>
-      <form className="form" onSubmit={formik.handleSubmit}>
-        <div className="form__group">
+      <form className='form' onSubmit={formik.handleSubmit}>
+        <div className='form__group'>
           <input
             value={formik.values.firstName}
-            onChange={formik.handleChange("firstName")}
-            onBlur={formik.handleBlur("firstName")}
-            className="form__input"
-            placeholder="First Name"
+            onChange={formik.handleChange('firstName')}
+            onBlur={formik.handleBlur('firstName')}
+            className='form__input'
+            placeholder='First Name'
           />
-          <div className="errorMsg">
+          <div className='errorMsg'>
             {formik.touched.firstName && formik.errors.firstName}
           </div>
         </div>
 
-        <div className="form__group">
+        <div className='form__group'>
           <input
             value={formik.values.lastName}
-            onChange={formik.handleChange("lastName")}
-            onBlur={formik.handleBlur("lastName")}
-            className="form__input"
-            placeholder="Last Name"
+            onChange={formik.handleChange('lastName')}
+            onBlur={formik.handleBlur('lastName')}
+            className='form__input'
+            placeholder='Last Name'
           />
 
-          <div className="errorMsg">
+          <div className='errorMsg'>
             {formik.touched.lastName && formik.errors.lastName}
           </div>
         </div>
 
-        <div className="form__group">
+        <div className='form__group'>
           <input
             value={formik.values.email}
-            onChange={formik.handleChange("email")}
-            onBlur={formik.handleBlur("email")}
-            className="form__input"
-            placeholder="Enter your Email Address"
+            onChange={formik.handleChange('email')}
+            onBlur={formik.handleBlur('email')}
+            className='form__input'
+            placeholder='Enter your Email Address'
           />
 
-          <div className="errorMsg">
+          <div className='errorMsg'>
             {formik.touched.email && formik.errors.email}
           </div>
         </div>
 
-        <div className="form__group">
+        <div className='form__group'>
           <input
             value={formik.values.password}
-            onChange={formik.handleChange("password")}
-            onBlur={formik.handleBlur("password")}
-            className="form__input"
-            placeholder="Enter Password"
+            onChange={formik.handleChange('password')}
+            onBlur={formik.handleBlur('password')}
+            className='form__input'
+            placeholder='Enter Password'
           />
 
-          <div className="errorMsg">
+          <div className='errorMsg'>
             {formik.touched.password && formik.errors.password}
           </div>
         </div>
 
-        <div className="form__group">
+        <div className='form__group'>
           <input
             value={formik.values.passwordConfirm}
-            onChange={formik.handleChange("passwordConfirm")}
-            onBlur={formik.handleBlur("passwordConfirm")}
-            className="form__input"
-            placeholder="Confirm Password"
+            onChange={formik.handleChange('passwordConfirm')}
+            onBlur={formik.handleBlur('passwordConfirm')}
+            className='form__input'
+            placeholder='Confirm Password'
           />
 
-          <div className="errorMsg">
+          <div className='errorMsg'>
             {formik.touched.passwordConfirm && formik.errors.passwordConfirm}
           </div>
         </div>
@@ -136,7 +136,7 @@ export const Register = () => {
         {loading ? (
           <button>loading....</button>
         ) : (
-          <button type="submit">Register</button>
+          <button type='submit'>Register</button>
         )}
       </form>
     </>
