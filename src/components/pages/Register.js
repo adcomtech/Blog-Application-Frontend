@@ -1,6 +1,10 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
 import { useFormik } from "formik"; // for handling form
 import * as Yup from "yup"; // for form validation
+import { userRegistrationAction } from "../../redux/slices/usersSlices";
 
 // handling validation
 const formSchema = Yup.object({
@@ -8,10 +12,13 @@ const formSchema = Yup.object({
   lastName: Yup.string().required("Last Name is Required"),
   email: Yup.string().required("Email is Required"),
   password: Yup.string().required("Password is Required"),
-  passwowrdConfirm: Yup.string().required("Password do not Match"),
+  passwordConfirm: Yup.string().required("Password do not Match"),
 });
 
 export const Register = () => {
+  // dispatching action or displaying information using created reducer
+  const dispatch = useDispatch();
+
   // Handling form Initial Values using formik
   const formik = useFormik({
     initialValues: {
@@ -19,19 +26,42 @@ export const Register = () => {
       lastName: "",
       email: "",
       password: "",
-      passwowrdConfirm: "",
+      passwordConfirm: "",
     },
 
     onSubmit: (values) => {
-      console.log(values);
+      // dispatching userRegistration Action
+      dispatch(userRegistrationAction(values));
+      // console.log(values);
     },
 
     validationSchema: formSchema,
   });
+
+  // Selecting Data from Store which are messages like 'Error, loading, success message" using useSelector hook
+  const storeData = useSelector((store) => store.users);
+
+  // distructing storeData
+  const { loading, appError, serverError, registered } = storeData;
+  console.log(appError, serverError);
+
+  // Redirecting the Registered User  to Profile Page
+  const navigate = useNavigate();
+  if (registered) {
+    return navigate("profile", { replace: true });
+  }
+
   return (
     <>
       <div className="form-heading">
         <h1>Registration page</h1>
+
+        {/* Displaying Error Message */}
+        {serverError || appError ? (
+          <h2>
+            {serverError}! {appError}
+          </h2>
+        ) : null}
       </div>
       <form className="form" onSubmit={formik.handleSubmit}>
         <div className="form__group">
@@ -91,18 +121,23 @@ export const Register = () => {
 
         <div className="form__group">
           <input
-            value={formik.values.passwowrdConfirm}
-            onChange={formik.handleChange("passwowrdConfirm")}
-            onBlur={formik.handleBlur("passwowrdConfirm")}
+            value={formik.values.passwordConfirm}
+            onChange={formik.handleChange("passwordConfirm")}
+            onBlur={formik.handleBlur("passwordConfirm")}
             className="form__input"
             placeholder="Confirm Password"
           />
 
           <div className="errorMsg">
-            {formik.touched.passwowrdConfirm && formik.errors.passwowrdConfirm}
+            {formik.touched.passwordConfirm && formik.errors.passwordConfirm}
           </div>
         </div>
-        <button type="submit">Register</button>
+        {/* Check if it is loading and change the button */}
+        {loading ? (
+          <button>loading....</button>
+        ) : (
+          <button type="submit">Register</button>
+        )}
       </form>
     </>
   );
