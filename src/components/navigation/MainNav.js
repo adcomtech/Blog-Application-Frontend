@@ -11,19 +11,11 @@ export const MainNav = () => {
   const store = useSelector(state => state?.users);
   const { loggedInUser } = store;
   const isAdmin = loggedInUser?.user?.isAdmin;
-  console.log(isAdmin);
+  // console.log(isAdmin);
 
   return (
     <>
       {/* Displaying NavBar Based on the Logged In User */}
-
-      {/* {!loggedInUser ? (
-        <PublicNav />
-      ) : loggedInUser ? (
-        <PrivateNav />
-      ) : isAdmin && (
-        <AdminNav />
-      ) } */}
 
       {isAdmin ? <AdminNav /> : loggedInUser ? <PrivateNav /> : <PublicNav />}
     </>

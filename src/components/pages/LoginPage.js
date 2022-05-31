@@ -44,52 +44,56 @@ export const LoginPage = () => {
   }, [navigate, loggedInUser]);
 
   return (
-    <React.Fragment>
-      <h1>Ready to Explore, Login</h1>
-      {/* Displaying Error Message */}
-      {serverError || appError ? (
-        <h2>
-          {serverError}! {appError}{' '}
-        </h2>
-      ) : (
-        <h2>Login Successful</h2>
-      )}
+    <section>
+      <div className='container'>
+        <h1>Ready to Explore, Login</h1>
+        {/* Displaying Error Message */}
+        {serverError || appError ? (
+          <h2>
+            {serverError}! {appError}
+          </h2>
+        ) : loggedInUser ? (
+          <h2>Login Successful</h2>
+        ) : null}
 
-      <form className='form' onSubmit={formik.handleSubmit}>
-        <div className='form__group'>
-          <input
-            value={formik.values.email}
-            onChange={formik.handleChange('email')}
-            onBlur={formik.handleBlur('email')}
-            className='form__input'
-            type='email'
-            placeholder='Enter your Email'
-          />
-          <div className='errorMsg'>
-            {formik.touched.email && formik.errors.email}
+        <form className='form' onSubmit={formik.handleSubmit}>
+          <div className='form__group'>
+            <input
+              value={formik.values.email}
+              onChange={formik.handleChange('email')}
+              onBlur={formik.handleBlur('email')}
+              className='form__input'
+              type='email'
+              placeholder='Enter your Email'
+            />
+            <div className='errorMsg'>
+              {formik.touched.email && formik.errors.email}
+            </div>
           </div>
-        </div>
 
-        <div className='form__group'>
-          <input
-            value={formik.values.password}
-            onChange={formik.handleChange('password')}
-            onBlur={formik.handleBlur('password')}
-            className='form__input'
-            type='password'
-            placeholder='Enter your Password'
-          />
-          <div className='errorMsg'>
-            {formik.touched.password && formik.errors.password}
+          <div className='form__group'>
+            <input
+              value={formik.values.password}
+              onChange={formik.handleChange('password')}
+              onBlur={formik.handleBlur('password')}
+              className='form__input'
+              type='password'
+              placeholder='Enter your Password'
+            />
+            <div className='errorMsg'>
+              {formik.touched.password && formik.errors.password}
+            </div>
           </div>
-        </div>
 
-        {loading ? (
-          <button disabled>Login</button>
-        ) : (
-          <button type='submit'>Login</button>
-        )}
-      </form>
-    </React.Fragment>
+          {loading ? (
+            <button disabled>Loading...</button>
+          ) : (
+            <button type='submit' className='btn'>
+              Login
+            </button>
+          )}
+        </form>
+      </div>
+    </section>
   );
 };
