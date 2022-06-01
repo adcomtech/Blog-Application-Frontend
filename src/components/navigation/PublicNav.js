@@ -45,13 +45,6 @@ export const PublicNav = () => {
       >
         Contact Us
       </NavLink>
-
-      <NavLink
-        to='/profile'
-        className={navBar => (navBar.isActive ? 'active-style' : 'link')}
-      >
-        Profile
-      </NavLink>
     </>
   );
 };

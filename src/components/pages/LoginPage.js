@@ -5,6 +5,9 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { userLoginAction } from '../../redux/slices/usersSlices';
 
+////////////////////////
+// Form Validation
+
 const formSchema = Yup.object({
   email: Yup.string().required('Email is Required to Login'),
   password: Yup.string().required('Password is Required to Login'),

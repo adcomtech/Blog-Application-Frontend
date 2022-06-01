@@ -71,6 +71,7 @@ export const Register = () => {
               onChange={formik.handleChange('firstName')}
               onBlur={formik.handleBlur('firstName')}
               className='form__input'
+              type='text'
               placeholder='First Name'
             />
             <div className='errorMsg'>
@@ -84,6 +85,7 @@ export const Register = () => {
               onChange={formik.handleChange('lastName')}
               onBlur={formik.handleBlur('lastName')}
               className='form__input'
+              type='text'
               placeholder='Last Name'
             />
 
@@ -98,6 +100,7 @@ export const Register = () => {
               onChange={formik.handleChange('email')}
               onBlur={formik.handleBlur('email')}
               className='form__input'
+              type='email'
               placeholder='Enter your Email Address'
             />
 
@@ -112,6 +115,7 @@ export const Register = () => {
               onChange={formik.handleChange('password')}
               onBlur={formik.handleBlur('password')}
               className='form__input'
+              type='password'
               placeholder='Enter Password'
             />
 
@@ -126,6 +130,7 @@ export const Register = () => {
               onChange={formik.handleChange('passwordConfirm')}
               onBlur={formik.handleBlur('passwordConfirm')}
               className='form__input'
+              type='password'
               placeholder='Confirm Password'
             />
 
