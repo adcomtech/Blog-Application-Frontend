@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AboutPage } from './components/pages/AboutPage';
 import { AddNewCategory } from './components/pages/AddNewCategory';
+import { CategoryList } from './components/pages/CategoryList';
 import { ContactPage } from './components/pages/ContactPage';
 import { ErrorPage } from './components/pages/ErrorPage';
 
@@ -26,7 +27,12 @@ function App() {
           <Route path='register' element={<Register />} />
           <Route path='login' element={<LoginPage />} />
           <Route path='profile' element={<ProfilePage />} />
-          <Route path='/admin/add-category' element={<AddNewCategory />} />
+          <Route path='admin/add-category' element={<AddNewCategory />} />
+          <Route path='admin/category-list' element={<CategoryList />} />
+          {/* <Route path='admin' element={<AdminLayout />}>
+            <Route index element={<AdminPage />} />
+          </Route> */}
+
           <Route path='*' element={<ErrorPage />} />
         </Route>
       </Routes>

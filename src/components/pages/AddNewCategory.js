@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
@@ -32,10 +32,25 @@ export const AddNewCategory = () => {
     validationSchema: formSchema,
   });
 
+  // Get Data from Store
+  const category = useSelector(state => state?.category);
+
+  const { loading, appError, serverError } = category;
+
   return (
     <div>
       <section>
-        <h1 className='hero'>Add New Category</h1>
+        <h1 className='hero-text'>Add New Category</h1>
+        <p>Add categories user will select when creating a post</p>
+
+        <div className='display-error'>
+          {/* Displaying Error Message */}
+          {serverError || appError ? (
+            <h2>
+              {serverError}! {appError}
+            </h2>
+          ) : null}
+        </div>
 
         <form className='form' onSubmit={formik.handleSubmit}>
           <input type='hidden' name='remember' defaultValue='true' />
@@ -59,9 +74,15 @@ export const AddNewCategory = () => {
           </div>
 
           <div className='form__control'>
-            <button type='submit' className='btn'>
-              Add Category
-            </button>
+            {loading ? (
+              <button type='submit' className='btn'>
+                Loading...
+              </button>
+            ) : (
+              <button type='submit' className='btn'>
+                Add Category
+              </button>
+            )}
           </div>
         </form>
       </section>

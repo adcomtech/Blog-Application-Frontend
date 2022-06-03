@@ -53,8 +53,8 @@ nav {
   padding-top: 36px;
 }
 
-.nav--item {
-  /* background-color: red; */
+.display-error {
+  color: red;
 }
 
 .nav--item a:link,

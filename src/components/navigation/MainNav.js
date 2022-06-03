@@ -10,14 +10,18 @@ export const MainNav = () => {
 
   const store = useSelector(state => state?.users);
   const { loggedInUser } = store;
-  const isAdmin = loggedInUser?.user?.isAdmin;
-  // console.log(isAdmin);
+  // const isAdmin = loggedInUser.user.isAdmin;
 
+  let admin;
+  if (loggedInUser && loggedInUser.user.role === 'admin') {
+    admin = true;
+    console.log('Yeah its an Admin');
+  }
   return (
     <>
       {/* Displaying NavBar Based on the Logged In User */}
 
-      {isAdmin ? <AdminNav /> : loggedInUser ? <PrivateNav /> : <PublicNav />}
+      {admin ? <AdminNav /> : loggedInUser ? <PrivateNav /> : <PublicNav />}
     </>
   );
 };
