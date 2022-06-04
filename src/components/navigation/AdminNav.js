@@ -37,14 +37,14 @@ export const AdminNav = () => {
       </NavLink>
 
       <NavLink
-        to='/add-category'
+        to='/admin/add-category'
         className={navBar => (navBar.isActive ? 'active-style' : 'link')}
       >
         Add Category
       </NavLink>
 
       <NavLink
-        to='/category-list'
+        to='/admin/category-list'
         className={navBar => (navBar.isActive ? 'active-style' : 'link')}
       >
         Category List

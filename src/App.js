@@ -12,6 +12,7 @@ import { PostDetailPage } from './components/pages/PostDetailPage';
 import { PostsPage } from './components/pages/PostsPage';
 import { ProfilePage } from './components/pages/ProfilePage';
 import { Register } from './components/pages/Register';
+import { UpdateCategory } from './components/pages/UpdateCategory';
 import { SharedLayout } from './components/templates/SharedLayout';
 
 function App() {
@@ -29,6 +30,10 @@ function App() {
           <Route path='profile' element={<ProfilePage />} />
           <Route path='admin/add-category' element={<AddNewCategory />} />
           <Route path='admin/category-list' element={<CategoryList />} />
+          <Route
+            path='admin/update-category/:id'
+            element={<UpdateCategory />}
+          />
           {/* <Route path='admin' element={<AdminLayout />}>
             <Route index element={<AdminPage />} />
           </Route> */}

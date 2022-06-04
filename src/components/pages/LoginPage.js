@@ -37,9 +37,11 @@ export const LoginPage = () => {
 
   // Check if there is Logged In User and Redirect to Profile Page
   const store = useSelector(state => state.users);
-  const { loggedInUser, loading, serverError, appError } = store; // pull user Data from Our Store
-  // actual redirect
+  const { loggedInUser, loading, serverError, appError } = store;
+
+  // Fetch User Data from Our Store and Redirect
   const navigate = useNavigate();
+
   useEffect(() => {
     if (loggedInUser) {
       return navigate('/', { replace: true });

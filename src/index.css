@@ -164,3 +164,11 @@ footer {
   padding-top: 22px;
   text-align: center;
 }
+
+.edit {
+  background-color: #020282;
+  color: #fff;
+  cursor: pointer;
+  padding: 0.1rem 0.2rem;
+  width: 3rem;
+}

@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
-import { createCategoryAction } from '../../redux/slices/categorySlices';
-import { useNavigate } from 'react-router-dom';
+import {
+  deleteCategoryAction,
+  fetchCategoryDetailsAction,
+  updateCategoryAction,
+} from '../../redux/slices/categorySlices';
 
 //////////////////////////////////////////////////
 // Form Validation
@@ -13,39 +17,56 @@ const formSchema = Yup.object({
   title: Yup.string().required('Title is Required to Create Category'),
 });
 
-export const AddNewCategory = () => {
+export const UpdateCategory = () => {
+  // Get Id Prameter from the URL
+  const params = useParams();
+  const id = params.id;
+
+  // Fetch A Category
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchCategoryDetailsAction(id));
+  }, [dispatch, id]);
+
+  // Get Data from Store
+  const state = useSelector(state => state?.category);
+  // Pull Category Data from the State
+  const {
+    category,
+    isCategoryEdited,
+    isCategoryDeleted,
+    loading,
+    appError,
+    serverError,
+  } = state;
 
   // Hanling form
   const formik = useFormik({
+    enableReinitialize: true,
     initialValues: {
-      title: '',
+      title: category?.title,
     },
 
     // Handle Submit when login button is pressed
     onSubmit: values => {
-      // Dispatching the data from the createCategoryAction
-      dispatch(createCategoryAction(values));
-      console.log(values);
+      // Dispatching the data
+      dispatch(updateCategoryAction({ title: values.title, id }));
     },
 
     // Validate the Form using Yup Schema Defined up above
     validationSchema: formSchema,
   });
 
-  // Get Data from Store
-  const category = useSelector(state => state?.category);
-
-  const { loading, isCategoryCreated, appError, serverError } = category;
-
-  // Redirecting the User After Creating Category
+  // Redirecting the User After Updating or Deleting Category
   const navigate = useNavigate();
-  if (isCategoryCreated) return navigate('/admin/category-list');
+  if (isCategoryEdited || isCategoryDeleted)
+    return navigate('/admin/category-list');
 
   return (
     <div>
       <section>
-        <h1 className='hero-text'>Add New Category</h1>
+        <h1 className='hero-text'>Update Category</h1>
         <p>Add categories user will select when creating a post</p>
 
         <div className='display-error'>
@@ -70,7 +91,7 @@ export const AddNewCategory = () => {
               className='form__input'
               type='text'
               autoComplete='text'
-              placeholder='Add New Category'
+              placeholder='Update Category'
             />
 
             <div className='errorMsg'>
@@ -84,9 +105,18 @@ export const AddNewCategory = () => {
                 Loading...
               </button>
             ) : (
-              <button type='submit' className='btn'>
-                Add Category
-              </button>
+              <React.Fragment>
+                <button type='submit' className='btn'>
+                  Update Category
+                </button>
+
+                <button
+                  className='btn'
+                  onClick={() => dispatch(deleteCategoryAction(id))}
+                >
+                  Delete Category
+                </button>
+              </React.Fragment>
             )}
           </div>
         </form>
