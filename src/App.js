@@ -5,6 +5,7 @@ import { AboutPage } from './components/pages/AboutPage';
 import { AddNewCategory } from './components/pages/AddNewCategory';
 import { CategoryList } from './components/pages/CategoryList';
 import { ContactPage } from './components/pages/ContactPage';
+import { CreatePost } from './components/pages/CreatePost';
 import { ErrorPage } from './components/pages/ErrorPage';
 
 import { HomePage } from './components/pages/HomePage';
@@ -30,6 +31,7 @@ function App() {
           <Route path='login' element={<LoginPage />} />
           <Route path='profile' element={<ProfilePage />} />
           <Route element={<ProtectedRoute />}>
+            <Route path='create-post' element={<CreatePost />} />
             <Route path='admin/add-category' element={<AddNewCategory />} />
             <Route path='admin/category-list' element={<CategoryList />} />
             <Route

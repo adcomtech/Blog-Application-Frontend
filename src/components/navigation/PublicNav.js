@@ -19,20 +19,6 @@ export const PublicNav = () => {
       </NavLink>
 
       <NavLink
-        to='/register'
-        className={navBar => (navBar.isActive ? 'active-style' : 'link')}
-      >
-        Register
-      </NavLink>
-
-      <NavLink
-        to='/login'
-        className={navBar => (navBar.isActive ? 'active-style' : 'link')}
-      >
-        Login
-      </NavLink>
-
-      <NavLink
         to='/about'
         className={navBar => (navBar.isActive ? 'active-style' : 'link')}
       >
@@ -44,6 +30,20 @@ export const PublicNav = () => {
         className={navBar => (navBar.isActive ? 'active-style' : 'link')}
       >
         Contact Us
+      </NavLink>
+
+      <NavLink
+        to='/register'
+        className={navBar => (navBar.isActive ? 'active-style' : 'link')}
+      >
+        Register
+      </NavLink>
+
+      <NavLink
+        to='/login'
+        className={navBar => (navBar.isActive ? 'active-style' : 'link')}
+      >
+        Login
       </NavLink>
     </>
   );
