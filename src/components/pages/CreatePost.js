@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Dropzone from 'react-dropzone';
 import styled from 'styled-components';
 import { useFormik } from 'formik';
@@ -7,6 +7,7 @@ import * as Yup from 'yup';
 
 import { createPostAction } from '../../redux/slices/postSlices';
 import { CategoryDropDown } from '../CategoryDropDown';
+import { useNavigate } from 'react-router-dom';
 
 //////////////////////////////////////////////////
 // Form Validation
@@ -30,7 +31,7 @@ const Container = styled.div`
   border-style: dashed;
   background-color: #fafafa;
   color: #bdbdbd;
-border-color:'red'
+  border-color:'red'
   transition: border 0.24s ease-in-out;
 `;
 
@@ -50,18 +51,26 @@ export const CreatePost = () => {
     onSubmit: values => {
       const data = {
         title: values.title,
-        category: values.category.label,
+        category: values?.category?.label,
         description: values.description,
         image: values.image,
       };
       // Dispatching the data from the createCategoryAction
       dispatch(createPostAction(data));
-      console.log(values);
+      console.log(data);
     },
 
     // Validate the Form using Yup Schema Defined up above
     validationSchema: formSchema,
   });
+
+  /// Getting Data from store
+  const post = useSelector(state => state?.post);
+  const { isPostCreated, loading, appError, serverError } = post;
+
+  // Redirecting when post is created
+  const navigate = useNavigate();
+  if (isPostCreated) return navigate('/posts');
 
   return (
     <section>
@@ -70,11 +79,11 @@ export const CreatePost = () => {
 
       <div className='display-error'>
         {/* Displaying Error Message */}
-        {/* {serverError || appError ? (
+        {serverError || appError ? (
           <h2>
             {serverError}! {appError}
           </h2>
-        ) : null} */}
+        ) : null}
       </div>
 
       <form className='form' onSubmit={formik.handleSubmit}>
@@ -96,11 +105,11 @@ export const CreatePost = () => {
 
         <div className='for__group'>
           <CategoryDropDown
-            value={formik.values.category}
+            value={formik.values.category?.label}
             onChange={formik.setFieldValue}
             onBlur={formik.setFieldTouched}
-            error={formik.errors?.category}
-            touched={formik.touched?.category}
+            error={formik.errors.category}
+            touched={formik.touched.category}
           />
         </div>
 
@@ -128,7 +137,7 @@ export const CreatePost = () => {
         <Container className='container'>
           <Dropzone
             onBlur={formik.handleBlur('image')}
-            accept='image/jpeg, image/png'
+            accept={'image/jpeg, image/jpg, image/png'}
             onDrop={acceptedFiles => {
               formik.setFieldValue('image', acceptedFiles[0]);
             }}
@@ -151,12 +160,17 @@ export const CreatePost = () => {
           </Dropzone>
         </Container>
 
-        <div className='form__control'>
-          <button type='submit' className='btn'>
-            Create Post
-          </button>
-          {/* )} */}
-        </div>
+        {loading ? (
+          <div className='form__control'>
+            <button className='btn'>Loading Please Wait......</button>
+          </div>
+        ) : (
+          <div className='form__control'>
+            <button type='submit' className='btn'>
+              Create Post
+            </button>
+          </div>
+        )}
       </form>
     </section>
   );

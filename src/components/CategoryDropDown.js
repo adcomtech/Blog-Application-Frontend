@@ -15,7 +15,7 @@ export const CategoryDropDown = props => {
 
   // Select Category State
   const category = useSelector(state => state?.category);
-  const { categoryList, loading, appError, serverError } = category;
+  const { categoryList, loading } = category;
 
   // Loop Through the Category List
   const allCategories = categoryList?.map(category => {
@@ -36,15 +36,6 @@ export const CategoryDropDown = props => {
 
   return (
     <React.Fragment>
-      {/* Displaying Error Message */}
-      <div className='display-error'>
-        {serverError || appError ? (
-          <h2>
-            {serverError}! {appError}
-          </h2>
-        ) : null}
-      </div>
-
       {/* Rendering the Select or Dropdown Conditional base on loading */}
       {loading ? (
         <h3>Categories are Loading, Please Wait</h3>

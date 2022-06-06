@@ -16,7 +16,7 @@ export const AdminNav = () => {
       </NavLink>
 
       <NavLink
-        to='/create'
+        to='/create-post'
         className={navBar => (navBar.isActive ? 'active-style' : 'link')}
       >
         Create

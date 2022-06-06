@@ -2,7 +2,7 @@ import React from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-export const ProtectedRoute = ({ component: Component, ...rest }) => {
+export const ProtectedRoute = () => {
   // check if user is logged in
   const user = useSelector(state => state?.users);
   const { loggedInUser } = user;

@@ -172,3 +172,8 @@ footer {
   padding: 0.1rem 0.2rem;
   width: 3rem;
 }
+
+.post-head span {
+  padding: 1rem;
+  cursor: pointer;
+}

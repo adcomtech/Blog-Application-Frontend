@@ -11,7 +11,7 @@ import { ErrorPage } from './components/pages/ErrorPage';
 import { HomePage } from './components/pages/HomePage';
 import { LoginPage } from './components/pages/LoginPage';
 import { PostDetailPage } from './components/pages/PostDetailPage';
-import { PostsPage } from './components/pages/PostsPage';
+import PostLists from './components/pages/PostLists';
 import { ProfilePage } from './components/pages/ProfilePage';
 import { Register } from './components/pages/Register';
 import { UpdateCategory } from './components/pages/UpdateCategory';
@@ -23,15 +23,17 @@ function App() {
       <Routes>
         <Route path='/' element={<SharedLayout />}>
           <Route index element={<HomePage />} />
-          <Route path='posts' element={<PostsPage />} />
           <Route path='posts/:postId' element={<PostDetailPage />} />
           <Route path='contact' element={<ContactPage />} />
           <Route path='about' element={<AboutPage />} />
           <Route path='register' element={<Register />} />
           <Route path='login' element={<LoginPage />} />
           <Route path='profile' element={<ProfilePage />} />
+          <Route path='posts' element={<PostLists />} />
+
           <Route element={<ProtectedRoute />}>
             <Route path='create-post' element={<CreatePost />} />
+
             <Route path='admin/add-category' element={<AddNewCategory />} />
             <Route path='admin/category-list' element={<CategoryList />} />
             <Route
@@ -39,10 +41,6 @@ function App() {
               element={<UpdateCategory />}
             />
           </Route>
-
-          {/* <Route path='admin' element={<AdminLayout />}>
-            <Route index element={<AdminPage />} />
-          </Route> */}
 
           <Route path='*' element={<ErrorPage />} />
         </Route>

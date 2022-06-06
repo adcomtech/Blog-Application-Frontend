@@ -22,7 +22,7 @@ export const PrivateNav = () => {
       </NavLink>
 
       <NavLink
-        to='/posts-list'
+        to='/posts'
         className={navBar => (navBar.isActive ? 'active-style' : 'link')}
       >
         Posts List

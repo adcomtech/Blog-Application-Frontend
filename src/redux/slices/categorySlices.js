@@ -60,19 +60,19 @@ export const fetchCategoryAction = createAsyncThunk(
   FETCH_CATEGORY,
   async (category, { rejectWithValue, getState, dispatch }) => {
     // Get the Login User From the State and extract the token
-    const user = getState().users;
-    const { loggedInUser } = user;
+    // const user = getState().users;
+    // const { loggedInUser } = user;
 
     // Get Authrization from Header
-    const config = {
-      headers: {
-        Authorization: `Bearer ${loggedInUser.token}`,
-      },
-    };
+    // const config = {
+    //   headers: {
+    //     Authorization: `Bearer ${loggedInUser.token}`,
+    //   },
+    // };
 
     try {
       // Http Call to Protected Route
-      const { data } = await axios.get(`${baseURL}/category`, config);
+      const { data } = await axios.get(`${baseURL}/category`);
 
       return data;
     } catch (error) {

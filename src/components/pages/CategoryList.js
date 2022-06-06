@@ -8,7 +8,7 @@ import { LoadingSpinner } from '../../utilities/LoadingSpinner';
 export const CategoryList = () => {
   const dispatch = useDispatch();
 
-  // Get the Category Data
+  // Fetch the Category Data
   useEffect(() => {
     dispatch(fetchCategoryAction());
   }, [dispatch]);
