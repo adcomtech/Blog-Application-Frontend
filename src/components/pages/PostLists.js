@@ -1,29 +1,20 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { fetchPostsAction } from '../../redux/slices/postSlices';
-import { LoadingSpinner } from '../../utilities/LoadingSpinner';
+import {
+  createPostLikesAction,
+  createPostDisLikesAction,
+  fetchPostsAction,
+} from '../../redux/slices/postSlices';
+// import { LoadingSpinner } from '../../utilities/LoadingSpinner';
 import { DateFormatter } from '../../utilities/DateFormatter';
 import { fetchCategoryAction } from '../../redux/slices/categorySlices';
 
 const PostLists = () => {
-  // Dispatch  Posst Action
-  const dispatch = useDispatch();
-
-  // Fetch the Posts Data
-  useEffect(() => {
-    dispatch(fetchPostsAction(''));
-  }, [dispatch]);
-
-  // Fetch the Category Data
-  useEffect(() => {
-    dispatch(fetchCategoryAction());
-  }, [dispatch]);
-
   // Get Post from Store
   const postsData = useSelector(state => state?.post);
 
-  const { postLists, loading, appError, serverError } = postsData;
+  const { postLists, appError, serverError, likes, dislikes } = postsData;
 
   const posts = postLists?.data?.posts;
 
@@ -32,10 +23,23 @@ const PostLists = () => {
   // Pull Category Data from the State
   const {
     categoryList,
-    loading: catLoading,
+    // loading: catLoading,
     appError: catAppError,
     // serverError: catServerError,
   } = category;
+
+  // Dispatch  Posst Action
+  const dispatch = useDispatch();
+
+  // Fetch the Posts Data
+  useEffect(() => {
+    dispatch(fetchPostsAction(''));
+  }, [dispatch, likes, dislikes]);
+
+  // Fetch the Category Data
+  useEffect(() => {
+    dispatch(fetchCategoryAction());
+  }, [dispatch]);
 
   return (
     <section>
@@ -46,11 +50,7 @@ const PostLists = () => {
         <div className=''>
           <div className='category'>
             <p>Categories</p>
-            {catLoading ? (
-              <>
-                <LoadingSpinner />
-              </>
-            ) : catAppError ? (
+            {catAppError ? (
               <h2>{catAppError}</h2>
             ) : categoryList?.length <= 0 ? (
               <h2>No Category Found!</h2>
@@ -58,19 +58,20 @@ const PostLists = () => {
               <ul>
                 {categoryList?.map(cat => (
                   <li key={cat._id}>
-                    <p onClick={() => dispatch(fetchCategoryAction(cat.title))}>
-                      {cat.title}
+                    <p onClick={() => dispatch(fetchPostsAction(cat))}>
+                      {cat?.title}
                     </p>
                   </li>
                 ))}
               </ul>
             )}
           </div>
-          {loading ? (
-            <>
-              <LoadingSpinner />
-            </>
-          ) : appError || serverError ? (
+
+          <div className='viewallpost'>
+            <p onClick={() => dispatch(fetchPostsAction())}>Veiew All Posts</p>
+          </div>
+
+          {appError || serverError ? (
             <h2>
               {appError}! {serverError}
             </h2>
@@ -84,8 +85,20 @@ const PostLists = () => {
                     <img src={post.image} alt='post ' />
 
                     <div className='post-head'>
-                      <span>like ({post.likes.length})</span>
-                      <span>dislike ({post.disLikes.length}) </span>
+                      <span
+                        onClick={() =>
+                          dispatch(createPostLikesAction(post?._id))
+                        }
+                      >
+                        like ({post.likes.length})
+                      </span>
+                      <span
+                        onClick={() =>
+                          dispatch(createPostDisLikesAction(post?._id))
+                        }
+                      >
+                        dislike ({post.disLikes.length}){' '}
+                      </span>
                       <span>numViews ({post.numViews}) </span>
                       <span>toggle</span>
                     </div>

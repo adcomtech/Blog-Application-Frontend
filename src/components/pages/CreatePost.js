@@ -35,7 +35,7 @@ const Container = styled.div`
   transition: border 0.24s ease-in-out;
 `;
 
-export const CreatePost = () => {
+export const CreatePost = props => {
   const dispatch = useDispatch();
 
   // Hanling form

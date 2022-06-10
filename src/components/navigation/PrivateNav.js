@@ -1,10 +1,20 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { userLogoutAction } from '../../redux/slices/usersSlices';
 
 export const PrivateNav = () => {
   const dispatch = useDispatch();
+
+  const navigate = useNavigate();
+
+  const logoutHandler = () => {
+    dispatch(userLogoutAction());
+
+    // Redirect to Home page
+    navigate('/');
+  };
+
   return (
     <>
       <NavLink
@@ -42,7 +52,7 @@ export const PrivateNav = () => {
         Contact Us
       </NavLink>
 
-      <Link to='#' onClick={() => dispatch(userLogoutAction())}>
+      <Link to='#' onClick={logoutHandler}>
         Logout
       </Link>
 

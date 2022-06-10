@@ -6,9 +6,8 @@ import { fetchCategoryAction } from '../redux/slices/categorySlices';
 
 export const CategoryDropDown = props => {
   //   console.log(props);
-  // Get Category Action
+  //dispatch action
   const dispatch = useDispatch();
-
   useEffect(() => {
     dispatch(fetchCategoryAction());
   }, [dispatch]);
@@ -26,10 +25,11 @@ export const CategoryDropDown = props => {
   });
 
   // passing the Category to the Form so as to get its value while creating a post
+  //handleChange
   const handleChange = value => {
     props.onChange('category', value);
   };
-
+  //handleBlur
   const handleBlur = () => {
     props.onBlur('category', true);
   };
@@ -41,9 +41,9 @@ export const CategoryDropDown = props => {
         <h3>Categories are Loading, Please Wait</h3>
       ) : (
         <Select
-          id='category'
           onChange={handleChange}
           onBlur={handleBlur}
+          id='category'
           options={allCategories}
           value={props?.value?.label}
         />

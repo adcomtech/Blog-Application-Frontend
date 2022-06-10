@@ -64,63 +64,61 @@ export const UpdateCategory = () => {
     return navigate('/admin/category-list');
 
   return (
-    <div>
-      <section>
-        <h1 className='hero-text'>Update Category</h1>
-        <p>Add categories user will select when creating a post</p>
+    <section>
+      <h1 className='hero-text'>Update Category</h1>
+      <p>Add categories user will select when creating a post</p>
 
-        <div className='display-error'>
-          {/* Displaying Error Message */}
-          {serverError || appError ? (
-            <h2>
-              {serverError}! {appError}
-            </h2>
-          ) : null}
+      <div className='display-error'>
+        {/* Displaying Error Message */}
+        {serverError || appError ? (
+          <h2>
+            {serverError}! {appError}
+          </h2>
+        ) : null}
+      </div>
+
+      <form className='form' onSubmit={formik.handleSubmit}>
+        <input type='hidden' name='remember' defaultValue='true' />
+        <div className=''>
+          <label htmlFor='email-address'>name</label>
+        </div>
+        <div className='form__group'>
+          <input
+            value={formik.values.title}
+            onChange={formik.handleChange('title')}
+            onBlur={formik.handleBlur('title')}
+            className='form__input'
+            type='text'
+            autoComplete='text'
+            placeholder='Update Category'
+          />
+
+          <div className='errorMsg'>
+            {formik.touched.title && formik.errors.title}
+          </div>
         </div>
 
-        <form className='form' onSubmit={formik.handleSubmit}>
-          <input type='hidden' name='remember' defaultValue='true' />
-          <div className=''>
-            <label htmlFor='email-address'>name</label>
-          </div>
-          <div className='form__group'>
-            <input
-              value={formik.values.title}
-              onChange={formik.handleChange('title')}
-              onBlur={formik.handleBlur('title')}
-              className='form__input'
-              type='text'
-              autoComplete='text'
-              placeholder='Update Category'
-            />
-
-            <div className='errorMsg'>
-              {formik.touched.title && formik.errors.title}
-            </div>
-          </div>
-
-          <div className='form__control'>
-            {loading ? (
+        <div className='form__control'>
+          {loading ? (
+            <button type='submit' className='btn'>
+              Loading...
+            </button>
+          ) : (
+            <React.Fragment>
               <button type='submit' className='btn'>
-                Loading...
+                Update Category
               </button>
-            ) : (
-              <React.Fragment>
-                <button type='submit' className='btn'>
-                  Update Category
-                </button>
 
-                <button
-                  className='btn'
-                  onClick={() => dispatch(deleteCategoryAction(id))}
-                >
-                  Delete Category
-                </button>
-              </React.Fragment>
-            )}
-          </div>
-        </form>
-      </section>
-    </div>
+              <button
+                className='btn'
+                onClick={() => dispatch(deleteCategoryAction(id))}
+              >
+                Delete Category
+              </button>
+            </React.Fragment>
+          )}
+        </div>
+      </form>
+    </section>
   );
 };
